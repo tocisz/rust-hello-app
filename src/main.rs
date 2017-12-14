@@ -19,7 +19,14 @@ impl Service for HelloWorld {
     // resolve to. This can change to whatever Future you need.
     type Future = Box<Future<Item=Self::Response, Error=Self::Error>>;
 
-    fn call(&self, _req: Request) -> Self::Future {
+    fn call(&self, req: Request) -> Self::Future {
+
+        let remote_str = match req.remote_addr() {
+            Some(addr) => format!("{}", addr),
+            None => "unknown".to_string(),
+        };
+        println!("{} from {}", req.method(), remote_str);
+
         // We're currently ignoring the Request
         // And returning an 'ok' Future, which means it's ready
         // immediately, and build a Response with the 'PHRASE' body.
