@@ -1,6 +1,6 @@
 sudo: required
 
-language: rust
+language: c
 
 services:
  - docker
