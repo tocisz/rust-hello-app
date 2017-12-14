@@ -8,6 +8,8 @@ rust:
 services:
  - docker
 
+rustup-install: true
+
 install:
  - docker pull tocisz/rust-builder
  - docker pull tocisz/dockerize-hello
@@ -16,3 +18,8 @@ script:
  - docker volume create build_bin_1
  - docker run --rm -v build_bin_1:/installed -v `pwd`:/usr/src/myapp tocisz/rust-builder
  - docker run -v /var/run/docker.sock:/var/run/docker.sock -v build_bin_1:/installed -it --rm -e IMAGE_NAME=rust-minimal tocisz/dockerize-hello
+
+after_success:
+ - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+ - docker tag rust-minimal tocisz/rust-minimal
+ - docker push tocisz/rust-minimal
