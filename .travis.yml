@@ -1,3 +1,18 @@
+sudo: required
+
 language: rust
+
 rust:
  - 1.22.1
+
+services:
+ - docker
+
+install:
+ - docker pull tocisz/rust-builder
+ - docker pull tocisz/dockerize-hello
+
+script:
+ - docker volume create build_bin_1
+ - docker run --rm -v build_bin_1:/installed -v `pwd`:/usr/src/myapp tocisz/rust-builder
+ - docker run -v /var/run/docker.sock:/var/run/docker.sock -v build_bin_1:/installed -it --rm -e IMAGE_NAME=rust-minimal tocisz/dockerize-hello
