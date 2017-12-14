@@ -2,13 +2,8 @@ sudo: required
 
 language: rust
 
-rust:
- - 1.22.1
-
 services:
  - docker
-
-rustup-install: true
 
 install:
  - docker pull tocisz/rust-builder
