@@ -23,9 +23,9 @@ impl Service for HelloWorld {
 
         let remote_str = match req.remote_addr() {
             Some(addr) => format!("{}", addr),
-            None => "unknown".to_string(),
+            None => String::from("unknown"),
         };
-        println!("{} from {}", req.method(), remote_str);
+        println!("{} {} from {}", req.method(), req.path(), remote_str);
 
         // We're currently ignoring the Request
         // And returning an 'ok' Future, which means it's ready
